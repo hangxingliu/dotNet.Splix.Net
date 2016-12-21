@@ -1,0 +1,25 @@
+{
+    "version": "1.0.0-*",
+    "buildOptions": {
+        "debugType": "portable",
+        "emitEntryPoint": true
+    },
+    "dependencies": {
+        "DotNetty.Common": "*",
+        "DotNetty.Buffers": "*",
+        "DotNetty.Transport": "*",
+        "DotNetty.Handlers": "*",
+        "DotNetty.Codecs": "*"
+    },
+    "frameworks": {
+        "netcoreapp1.1": {
+            "dependencies": {
+                "Microsoft.NETCore.App": {
+                    "type": "platform",
+                    "version": "1.1.0"
+                }
+            },
+            "imports": "dnxcore50"
+        }
+    }
+}
