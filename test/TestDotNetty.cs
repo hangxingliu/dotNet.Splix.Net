@@ -41,7 +41,7 @@ namespace Splix.Net.Test {
             // await clientChannel.WriteAndFlushAsync(buffer);
             Console.ReadLine();
             await clientChannel.CloseAsync();
-            group.ShutdownGracefullyAsync();
+            group.ShutdownGracefullyAsync().Wait();
         }
     }
 	public class MyHandler: ChannelHandlerAdapter {

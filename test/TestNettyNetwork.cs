@@ -11,7 +11,7 @@ namespace Splix.Net.Test {
             TestEventListener e = new TestEventListener();
             NettyNetwork network = new NettyNetwork(e);
             e.setNetwork(network);
-            network.connect("192.168.199.233", 25575);
+            network.connectSync("192.168.199.233", 25575);
             Console.ReadLine();
         }
 	}
@@ -41,7 +41,7 @@ namespace Splix.Net.Test {
                 }
                 Console.WriteLine("");
             }
-            network.disconnect();
+            network.disconnectSync();
         }
 	}
 }

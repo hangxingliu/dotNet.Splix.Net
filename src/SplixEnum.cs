@@ -25,6 +25,7 @@ namespace Splix.Code {
 	public enum DeathReason {
 		KILL_BY_PLAYER,
 		KILL_BY_SELF,
-		KILL_BY_BORDER
+		KILL_BY_BORDER,
+		KILL_BY_DISCONNECT
 	}
 }

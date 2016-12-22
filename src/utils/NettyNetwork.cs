@@ -12,7 +12,7 @@ namespace Splix.Net.Utils {
 
         string serverHostName;
         int serverPort;
-        IChannel networkChannel = null;
+        public IChannel networkChannel = null;
         MultithreadEventLoopGroup networkGroup = null;
 		NettyNetworkEvent eventListener;
 
@@ -20,20 +20,16 @@ namespace Splix.Net.Utils {
             this.eventListener = e;
         }
 
-        public void connect(string serverHostName, int serverPort) {
+        public void connectSync(string serverHostName, int serverPort) {
             this.serverHostName = serverHostName;
             this.serverPort = serverPort;
             //先关闭现有连接
             _disconnectAsync().Wait();
-            Console.WriteLine(" _disconnectAsync().Wait();");
-            _connectAsync();
-             Console.WriteLine(" _connectAsync();");
+            _connectAsync().Wait();
         }
 
-		public void disconnect() {
-			// for(int i = 0 ; i< 256; i++)
-         	   Console.WriteLine("Please do not invoke this function if you really need what things will happen!");
-            _disconnectAsync();
+		public void disconnectSync() {
+            _disconnectAsync().Wait();
         }
 
         async Task _disconnectAsync() {
@@ -51,7 +47,7 @@ namespace Splix.Net.Utils {
             }
         }
 
-        async void _connectAsync() {
+        async Task _connectAsync() {
             try {
                 networkGroup = new MultithreadEventLoopGroup();
                 var bootstrap = new Bootstrap();
@@ -81,9 +77,9 @@ namespace Splix.Net.Utils {
         public override void ChannelReadComplete(IChannelHandlerContext context) => context.Flush();
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception) {
-			//关闭现有连接
-            _disconnectAsync();
-           eventListener.onNetworkError(exception);
+            //关闭现有连接
+            Task.Run(()=>{ _disconnectAsync().Wait(); });
+            eventListener.onNetworkError(exception);
         }
     }
 

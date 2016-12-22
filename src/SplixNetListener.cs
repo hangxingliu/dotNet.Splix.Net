@@ -4,11 +4,10 @@ namespace Splix.Net {
 		/* 连接丢失时调用 */
 		abstract public void LostConnection ();
 
-
 		/* 收到新地图信息时调用,传入map[x,y]为地图对应块的信息
 		 * 为四位整数 [ID(2b),属性{头身地}(1b),头方向(1b)], 0: 空气, -1: 无效地方(边界)
 		 * 值参照BlockAttribute , MoveDirection */
-		abstract public void RefreshMap (int mapX, int mapY, int mapSize, int[,] map);
+		abstract public void RefreshMap (int mapX, int mapY, int[,] map);
 
 		/* 有新用户加入时调用,传入用户名和用户ID */
 		abstract public void UserIn (string username, int id);

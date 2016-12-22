@@ -1,7 +1,7 @@
 namespace Splix.Net.Structure {
 	class Map {
 		public int[,] mapData;
-        public int leftTopX = 0, leftTopY = 0;
+        public int centerX = 0, centerY = 0;
         public int mapWidth;
 
 		public Map(int width) {
