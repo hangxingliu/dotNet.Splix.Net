@@ -1,6 +1,7 @@
 # CSharp.Splix Net Module
 
-This is my C# lesson assignment
+This is my C# lesson assignment   
+Using [DotNetty](https://github.com/Azure/DotNetty)
 
 ## How to use in CSharp.Splix Project
 
