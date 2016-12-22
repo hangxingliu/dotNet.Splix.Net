@@ -12,10 +12,12 @@ namespace Splix.Net.Utils {
             freeLocalIdsLength = 0;
         }
         public int getLocalIdByNetworkId(int networkId) {
+            return networkId;
             int localId = Array.FindIndex(ids, id => id == networkId);
 			return localId == -1 ? pushNetworkId(networkId) : localId;
         }
 		public int pushNetworkId(int networkId) {
+            return networkId;
 			if(idsLength < ids.Length) {
                 ids[idsLength] = networkId;
                 return idsLength++;
@@ -38,6 +40,7 @@ namespace Splix.Net.Utils {
         }
 
 		public int getNetworkIdByLocalId(int localId) {
+            return localId;
 			if(localId < 0 || localId >= idsLength)
                 return -1;
 			return ids[localId];
