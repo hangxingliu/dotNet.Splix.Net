@@ -5,7 +5,7 @@ namespace Splix.Net.Test {
 
         public static String nickName = "";
         public static String serverName = "";
-        public static int serverPort = 25572;
+        public static int serverPort = 25575;
 
         public static bool isDead = false;
         public static int myId = -1;

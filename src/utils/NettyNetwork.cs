@@ -63,7 +63,7 @@ namespace Splix.Net.Utils {
 						pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(int.MaxValue, 0, 4, 0, 4));
 						pipeline.AddLast(this);
                 }));
-                networkChannel = await bootstrap.ConnectAsync(IPAddress.Parse(serverHostName), serverPort);
+                networkChannel = await bootstrap.ConnectAsync(serverHostName, serverPort);
             }catch(Exception e) {
                 eventListener.onNetworkError(e);
             }

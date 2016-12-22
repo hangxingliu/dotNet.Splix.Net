@@ -16,6 +16,8 @@ God knows the way
 	2. `dotnet build`
 	3. `dotnet run`
 
+> P.s. Solve console encoding bug: `chcp 65001`
+
 ## License
 
 [Apache Licence 2.0](LICENSE)
