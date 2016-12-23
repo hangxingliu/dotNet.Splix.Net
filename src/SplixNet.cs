@@ -66,6 +66,7 @@ namespace Splix.Net {
         Task _getGameStartSignAsync(IByteBuffer msg) {
             //获取玩家ID
             playerLocalId = idc.pushNetworkId(msg.ReadInt());
+            listener.UserLogin(playerUserName, playerLocalId);
             return Task.Run(() => {
                 //读取玩家列表
                 int playersLength = msg.ReadInt();

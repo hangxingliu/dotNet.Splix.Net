@@ -9,8 +9,10 @@ namespace Splix.Net {
 		 * 值参照BlockAttribute , MoveDirection */
 		abstract public void RefreshMap (int mapX, int mapY, int[,] map);
 
-		/* 有新用户加入时调用,传入用户名和用户ID */
-		abstract public void UserIn (string username, int id);
+        abstract public void UserLogin(string username, int id);
+
+        /* 有新用户加入时调用,传入用户名和用户ID */
+        abstract public void UserIn (string username, int id);
 
 		/* 有谁死了死了死了死了调用,传入用户ID和死亡类型id,参考DeathReason */
 		abstract public void UserDie (int id, int type);

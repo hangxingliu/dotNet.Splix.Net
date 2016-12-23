@@ -79,5 +79,9 @@ namespace Splix.Net.Test {
            Console.WriteLine("--------\n新的用户加入信息:\n  加入者ID: {0}\n  用户名: {1}\n--------", 
                 id, username);
         }
+
+        public override void UserLogin(string username, int id){
+            // throw new NotImplementedException();
+        }
     }
 }
