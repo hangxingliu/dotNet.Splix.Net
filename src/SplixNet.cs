@@ -122,8 +122,8 @@ namespace Splix.Net {
 					int rank = 1;
 					string text = "", textPart = "";
 					while(size-- > 0) {
-						textPart = (rank < 10 ? "0" : "") + rank + "  " + fixStringLength(
-							playersUserNameCache[idc.getLocalIdByNetworkId(msg.ReadInt())], 15) + "  " + 
+						textPart = (rank < 10 ? "0" : "") + rank + "  " + 
+							playersUserNameCache[idc.getLocalIdByNetworkId(msg.ReadInt())] + "  " + 
                             (""+msg.ReadInt()).PadLeft(5) + "\n";
                         if(rank <= 10)
 							text += textPart;
