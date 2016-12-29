@@ -27,7 +27,8 @@ namespace Splix.Net {
 		}
 
 		public int Login(string username, string serverip, int port) {
-            playerUserName = username;
+			username = fixStringLength(username, 19);
+			playerUserName = username;
             
             playerLocalId = -1;
             networkException = null;
