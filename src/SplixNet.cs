@@ -15,12 +15,16 @@ namespace Splix.Net {
 
         IdContainer idc;
         string playerUserName;
-        int playerLocalId;
+        string[] playersUserNameCache = new string[1<<8];
+		int playerLocalId;
 
         public SplixNet(SplixNetListener listener) {
             this.listener = listener;
-            network = new NettyNetwork(this);
-        }
+            //初始化用户名缓存
+            for (int i = 0; i < playersUserNameCache.Length; i ++ )
+				playersUserNameCache[i] = "";
+			network = new NettyNetwork(this);
+		}
 
 		public int Login(string username, string serverip, int port) {
             playerUserName = username;
@@ -73,8 +77,9 @@ namespace Splix.Net {
                 while (playersLength-- > 0) {
                     int id = idc.getLocalIdByNetworkId(msg.ReadInt());
                     String nickName = _readStrFromBytesBuffer(msg);
-                    //玩家本人
-                    if (id == playerLocalId)
+					playersUserNameCache[id] = nickName;
+					//玩家本人
+					if (id == playerLocalId)
                         continue;
                     listener.UserIn(nickName, id);
                 }
@@ -111,7 +116,21 @@ namespace Splix.Net {
                     Map map = MapDecoder.decodeMap81(msg);
                     listener.RefreshMap(map.centerX, map.centerY, map.mapData);
                     return;
-                case 7://任意一个玩家死亡
+                case 3://高分榜
+					int size = msg.ReadInt();
+					int rank = 1;
+					string text = "", textPart = "";
+					while(size-- > 0) {
+						textPart += (rank < 10 ? "0" : "") + rank + "  " + fixStringLength(
+							playersUserNameCache[idc.getLocalIdByNetworkId(msg.ReadInt())], 15) + "  " + 
+                            (""+msg.ReadInt()).PadLeft(5) + "\n";
+                        if(rank <= 10)
+							text += textPart;
+						rank++;
+					}
+                    listener.Scoreboard(text);
+					break;
+				case 7://任意一个玩家死亡
                     int deadPlayerLocalId = idc.getLocalIdByNetworkId(msg.ReadInt());
                     int deadBecause = msg.ReadInt();
 
@@ -123,6 +142,7 @@ namespace Splix.Net {
                 case 6://玩家出生
                     int id = idc.getLocalIdByNetworkId(msg.ReadInt());
                     String nickName = _readStrFromBytesBuffer(msg);
+                    playersUserNameCache[id] = nickName;
                     //玩家本人
                     if(id == playerLocalId)
                         return;
@@ -133,5 +153,11 @@ namespace Splix.Net {
                     break;
             }
         }
+
+        string fixStringLength(string str, int len) {
+			int realLen = str.Length;
+            if(realLen > len) return str.Substring(0, len - 3) + "...";
+			return str.PadRight(len, ' ');
+		}
     }
 }

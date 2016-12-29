@@ -30,10 +30,9 @@ namespace Splix.Net.Test {
             myId = net.Login(nickName, serverName, serverPort);
             Console.WriteLine("你的游戏ID是: {0}", myId);
             Console.Write("按下任意键开始显示游戏画面及操控(使用WASD控制, Q退出游戏) > ");
-            
+            Console.ReadKey();
 			doYouWantToShowMap = true;
 
-            Console.ReadKey();
 
             while (true) {
                 var key = Console.ReadKey().KeyChar;
@@ -42,13 +41,16 @@ namespace Splix.Net.Test {
                     case 's': net.Move(1);break;
                     case 'a': net.Move(2);break;
                     case 'd': net.Move(3);break;
-					case 'q': net.Logout();return;
+                    case 'q': 
+                        Console.WriteLine("\n退出中...");
+                        net.Logout();return;
 				}
             }
         }
 	}
     public class TestListener : SplixNetListener {
-        public override void LostConnection() {
+		string scoreboard = "";
+		public override void LostConnection() {
             console.log("遇到网络问题, 正在退出中...");
             Environment.Exit(1);
         }
@@ -67,7 +69,12 @@ namespace Splix.Net.Test {
                 }
                 Console.WriteLine(str);
             }
-        }
+			Console.WriteLine("高分榜:\n" + scoreboard);
+		}
+
+        public override void Scoreboard(string scoreboard) {
+			this.scoreboard = scoreboard;
+		}
 
         public override void UserDie(int id, int type) {
             TestSplixNet.isDead = TestSplixNet.myId == id;;
